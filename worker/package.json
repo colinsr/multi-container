@@ -1,0 +1,14 @@
+{
+  "author": {
+    "name": "colinsr"
+  },
+  "dependencies": {
+    "nodemon": "1.18.3",
+    "redis": "2.8.0"
+  },
+  "name": "javascript_background",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon"
+  }
+}
