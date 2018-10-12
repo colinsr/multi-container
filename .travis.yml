@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t colinsr/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run colinsr/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t colinsr/multi-client ./client
+  - docker build -t colinsr/multi-worker ./worker
+  - docker build -t colinsr/multi-server ./server
+  - docker build -t colinsr/multi-nginx ./nginx
+  # Log into docker hub
+  - echo "DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push images to hub
+  - docker push colinsr/multi-client
+  - docker push colinsr/multi-worker
+  - docker push colinsr/multi-server
+  - docker push colinsr/multi-nginx
