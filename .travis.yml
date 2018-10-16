@@ -20,3 +20,16 @@ after_success:
   - docker push colinsr/multi-worker
   - docker push colinsr/multi-server
   - docker push colinsr/multi-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: $AWS_REGION
+  app: multi-container
+  env: $AWS_EB_ENV
+  bucket_name: $AWS_BUCKET_NAME
+  bucket_path: multi-container
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: 
+    secure: $AWS_SECRET_KEY
